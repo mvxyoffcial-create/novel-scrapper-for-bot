@@ -1,13 +1,4 @@
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from config import Config
-
-
-def force_sub_keyboard() -> InlineKeyboardMarkup:
-    buttons = []
-    for ch in Config.FORCE_SUB_CHANNELS:
-        buttons.append([InlineKeyboardButton(f"📢 Join {ch['name']}", url=ch["link"])])
-    buttons.append([InlineKeyboardButton("✅ I Joined", callback_data="check_sub")])
-    return InlineKeyboardMarkup(buttons)
 
 
 def novel_main_keyboard(novel_url: str, total_chapters: int) -> InlineKeyboardMarkup:
@@ -38,17 +29,16 @@ def chapter_nav_keyboard(novel_url: str, current: int, total: int) -> InlineKeyb
 
 
 def settings_keyboard(settings: dict) -> InlineKeyboardMarkup:
-    mode     = "📱 Telegram" if settings["reading_mode"] == "telegram" else "📁 File"
-    auto_next = "✅ ON" if settings["auto_next"] else "❌ OFF"
-    cover    = "✅ ON" if settings["send_cover"] else "❌ OFF"
-    dl_btns  = "✅ ON" if settings["download_buttons"] else "❌ OFF"
-
+    mode    = "📱 Telegram" if settings["reading_mode"] == "telegram" else "📁 File"
+    auto    = "✅ ON" if settings["auto_next"] else "❌ OFF"
+    cover   = "✅ ON" if settings["send_cover"] else "❌ OFF"
+    dl      = "✅ ON" if settings["download_buttons"] else "❌ OFF"
     return InlineKeyboardMarkup([
-        [InlineKeyboardButton(f"📖 Reading Mode: {mode}", callback_data="set|reading_mode")],
-        [InlineKeyboardButton(f"⏭ Auto Next: {auto_next}",       callback_data="set|auto_next")],
-        [InlineKeyboardButton(f"🖼 Send Cover: {cover}",          callback_data="set|send_cover")],
-        [InlineKeyboardButton(f"⬇️ DL Buttons: {dl_btns}",       callback_data="set|download_buttons")],
-        [InlineKeyboardButton("✅ Done",                           callback_data="close")],
+        [InlineKeyboardButton(f"📖 Reading Mode: {mode}",  callback_data="set|reading_mode")],
+        [InlineKeyboardButton(f"⏭ Auto Next: {auto}",      callback_data="set|auto_next")],
+        [InlineKeyboardButton(f"🖼 Send Cover: {cover}",   callback_data="set|send_cover")],
+        [InlineKeyboardButton(f"⬇️ DL Buttons: {dl}",      callback_data="set|download_buttons")],
+        [InlineKeyboardButton("✅ Done",                    callback_data="close")],
     ])
 
 
